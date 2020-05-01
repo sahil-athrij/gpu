@@ -1,6 +1,6 @@
 entity tri_state_buffer_top is
     Port (
-           -- 16 input / output buffer with one enable
+           -- 16 input / output buffer
            CLK  : in  std_logic;
            IEN  : in  std_logic;
            INP  : in  std_logic_vector (15 downto 0);
@@ -14,7 +14,7 @@ begin
     process(CLK,IEN,OEN)
     begin
         if (CLK'event and CLK = '1') then
-            if (IEN = '1') then
+            if (IEN = '0') then
                     -- 16 input/output active low enabled tri-state buffer
                 OUTP <= INP when (OEN = '0') else "ZZZZ";
             end if;
