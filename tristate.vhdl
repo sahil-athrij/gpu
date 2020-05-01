@@ -27,7 +27,7 @@ begin
                 OUTP <= temp;
             else
                 OUTP <= (others => 'Z');
-        end if;
+            end if;
     end process;              
  
 
