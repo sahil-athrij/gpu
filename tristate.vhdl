@@ -15,19 +15,20 @@ architecture Behavioral of tri_state_buffer_top is
 
     signal temp : std_logic_vector (15 downto 0);
 begin
-    process(CLK,IEN,OEN)
+    process(CLK)
     begin
-        if (CLK'event and CLK = '1') then
+        if rising_edge(CLK) then
             if (IEN = '0') then
-                temp <= INP;
+                temp <= INP; -- this is a register
             end if;
-            if (OEN = '0') then
+            if (OEN = '0') and (IEN = '0') then
+                OUTP <= INP;
+            else if (OEN = '0') then
                 OUTP <= temp;
-            end if;
             else
-                OUTP <= "ZZZZZZZZZZZZZZZZ";
-            end if;
-    end process;                
+                OUTP <= (others => 'Z');
+        end if;
+    end process;              
  
 
 
