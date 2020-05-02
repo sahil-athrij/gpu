@@ -5,7 +5,7 @@ entity t_tri_state_buffer_top is
 end t_tri_state_buffer_top;
 
 architecture t_behaviour of t_tri_state_buffer_top is
-    component tri_state_buffer_top is
+    component reg is
         port(
             CLK : in std_logic;
             IEN : in std_logic;
@@ -14,7 +14,7 @@ architecture t_behaviour of t_tri_state_buffer_top is
             OUTP: out std_logic_vector(15 downto 0)
 
         );
-    end component tri_state_buffer_top;
+    end component reg;
 
     signal clk_t :  std_logic;
     signal ien_t  :  std_logic;
@@ -23,7 +23,7 @@ architecture t_behaviour of t_tri_state_buffer_top is
     signal Q_t   :  std_logic_vector(15 downto 0);
 
     begin
-        module_tri_state_buffer_top: tri_state_buffer_top
+        module_reg: reg
         port map(
             CLK => clk_t,
             IEN  => ien_t,

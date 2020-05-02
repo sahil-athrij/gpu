@@ -24,6 +24,8 @@ architecture Behavioral of regbank is
 
     component reg is
         port(
+
+
             CLK  : in  STD_LOGIC;
             IEN  : in  STD_LOGIC;
             INP  : in  STD_LOGIC_VECTOR (15 downto 0);
