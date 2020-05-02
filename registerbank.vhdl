@@ -32,6 +32,7 @@ architecture Behavioral of regbank is
         );
     end component;
 
+
     signal INP_select : STD_LOGIC_VECTOR(15 DOWNTO 0); -- INPUT ENABLE DEMUX OP
     signal OUT_select : STD_LOGIC_VECTOR(15 DOWNTO 0); -- OUTPUT ENABLE DEMUX OP
 

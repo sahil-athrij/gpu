@@ -18,7 +18,7 @@ architecture t_behaviour of t_regbank is
     end component regbank;
 
     signal clk_t  :  std_logic;
-    signal D_t    :  std_logic_vector(15 downto 0);
+    signal D_t    :  std_logic_vector(15 downto 0):= (others => 'Z');
     signal inp_t  :  std_logic;
     signal out_t  :  std_logic;
     signal inps_t :  std_logic_vector(3 downto 0);
@@ -46,5 +46,20 @@ architecture t_behaviour of t_regbank is
         end process;
 
 
-
+        en_process : process
+        begin
+            inps_t <= "0000";
+            inp_t <='0';
+            D_t <="0000111100001111";
+            wait for 50 ms;
+            inps_t <= "0000";
+            inp_t <='1';
+            D_t <="ZZZZZZZZZZZZZZZZ";
+            wait for 50 ms;
+            wait for 50 ms;
+            outs_t <= "0000";
+            out_t <='0';
+            wait for 50 ms;
+            wait;
+        end process;
 end t_behaviour;
