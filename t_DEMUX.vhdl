@@ -20,26 +20,27 @@ architecture t_behaviour of t_DEMUX is
     begin
         module_DEMUX : DEMUX
         port map(
-            I => I_t;
-            S => S_t;
-            Y => Y_t;
+            I => I_t,
+            S => S_t,
+            Y => Y_t
         );
         a_process : process
         begin
-            I_t <= "0";
+            I_t <= '0';
             S_t <= "0000";
             wait for 10 ms;
 
-            I_t <= "0";
+            I_t <= '0';
             S_t <= "0010";
             wait for 10 ms;
 
-            I_t <= "0";
+            I_t <= '0';
             S_t <= "0100";
             wait for 10 ms;
 
-            I_t <= "0";
+            I_t <= '0';
             S_t <= "1111";
             wait for 10 ms;
+            wait;
         end process;
         end t_behaviour;             
