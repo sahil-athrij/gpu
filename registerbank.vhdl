@@ -32,16 +32,16 @@ architecture Behavioral of regbank is
         );
     end component;
 
-    signal e : STD_LOGIC_VECTOR(15 DOWNTO 0); -- INPUT ENABLE DEMUX OP
-    signal f : STD_LOGIC_VECTOR(15 DOWNTO 0); -- OUTPUT ENABLE DEMUX OP
+    signal INP_select : STD_LOGIC_VECTOR(15 DOWNTO 0); -- INPUT ENABLE DEMUX OP
+    signal OUT_select : STD_LOGIC_VECTOR(15 DOWNTO 0); -- OUTPUT ENABLE DEMUX OP
 
 
     begin
 
-        d1 : DEMUX port map (I => INPUT_ENABLE, S => INPUT_SELECT, Y => e);
-        d2 : DEMUX port map (I => OUTPUT_ENABLE, S => OUTPUT_SELECT, Y => f);
+        inpmux : DEMUX port map (I => INPUT_ENABLE, S => INPUT_SELECT, Y => INP_select);
+        outmux : DEMUX port map (I => OUTPUT_ENABLE, S => OUTPUT_SELECT, Y => OUT_select);
 
         gen: for i in 0 to 15 generate
-            UUT: reg port map (CLK => CLK, IEN => E(i), OEN => F(i), OUTP => D,INP => D);
+            UUT: reg port map (CLK => CLK, IEN => INP_select(i), OEN => OUT_select(i), OUTP => D,INP => D);
         end generate gen;
     end Behavioral;
