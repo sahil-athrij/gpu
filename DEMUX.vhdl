@@ -43,7 +43,7 @@ architecture Behavioral of DEMUX is
                 Y(13) <= I;
             elsif (S = "1110") then
                 Y(14) <= I;
-            elsif (S = "1111") then
+            else
                 Y(15) <= I;
             end if;
         end process;
