@@ -10,13 +10,11 @@ entity reg is
            INP  : in  std_logic_vector (15 downto 0);
            OEN  : in  STD_LOGIC;
            OUTP : out std_logic_vector (15 downto 0);
-           SHL  : IN std_logic; --shift left
-           SHR  : IN STD_LOGIC; -- shift right
            SOR  : IN STD_LOGIC; --shift (0) or rotate (1)
            AOL  : IN STD_LOGIC; --arithmetic (0) or logical shift (1)
            mode : IN STD_LOGIC; -- shift rotate mode (1) or read/write mode (0)
-           RR   : IN STD_LOGIC; -- rotate right
-           RL   : IN STD_LOGIC; --rotate left
+           SH   : IN STD_LOGIC; -- shift right (0) left (1)
+           RO   : IN STD_LOGIC; -- rotate right(0) left(1)
            );
 end reg;
 
@@ -45,24 +43,24 @@ begin
             
             if (mode = '1') then    -- shift/rotate mode
                 if (SOR = '0') and (AOL = '0') then
-                    if (SHR = '0') then
+                    if (SH = '0') then
                         temp <= shift_right (signed(temp), 1); -- arithmetic right shift
                     end if;
-                    if (SHL = '0') then
+                    if (SH = '1') then
                         temp <= shift_left (signed(temp), 1); -- arithmetic left shift
                     end if;        
                 elsif (SOR = '0') and (AOL = '1') then
-                    if (SHR = '0') then
+                    if (SH = '0') then
                         temp <= shift_right (unsigned(temp), 1); -- logical right shift
                     end if;
-                    if (SHL = '0') then
+                    if (SH = '1') then
                         temp <= shift_left (unsigned(temp), 1); -- logical left shift
                     end if;  
                 elsif (SOR = '1') then
-                    if (RR = '0') then
+                    if (RO = '0') then
                         temp <= rotate_right (temp, 1);
                     end if;
-                    if (RL = '0') then
+                    if (RO = '1') then
                         temp <= rotate_left (temp, 1);    
             end if;        
                   
