@@ -11,10 +11,13 @@ entity reg is
            OEN  : in  STD_LOGIC;
            OUTP : out std_logic_vector (15 downto 0);
            SOR  : IN STD_LOGIC; --shift (0) or rotate (1)
-           AOL  : IN STD_LOGIC; --arithmetic (0) or logical shift (1)
            mode : IN STD_LOGIC; -- shift rotate mode (1) or read/write mode (0)
-           SH   : IN STD_LOGIC; -- shift right (0) left (1)
            RO   : IN STD_LOGIC; -- rotate right(0) left(1)
+           SH   : IN std_logic_vector(1 downto 0);
+           -- 00 arith right shift
+           -- 01 arith left shift
+           -- 10 logical right shift
+           -- 11 logical left shift
            );
 end reg;
 
@@ -42,18 +45,17 @@ begin
             end if;
             
             if (mode = '1') then    -- shift/rotate mode
-                if (SOR = '0') and (AOL = '0') then
-                    if (SH = '0') then
+                if (SOR = '0') then
+                    if (SH = '00') then
                         temp <= shift_right (signed(temp), 1); -- arithmetic right shift
                     end if;
-                    if (SH = '1') then
+                    if (SH = '01') then
                         temp <= shift_left (signed(temp), 1); -- arithmetic left shift
                     end if;        
-                elsif (SOR = '0') and (AOL = '1') then
-                    if (SH = '0') then
+                    if (SH = '10') then
                         temp <= shift_right (unsigned(temp), 1); -- logical right shift
                     end if;
-                    if (SH = '1') then
+                    if (SH = '11') then
                         temp <= shift_left (unsigned(temp), 1); -- logical left shift
                     end if;  
                 elsif (SOR = '1') then
