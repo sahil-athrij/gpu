@@ -9,7 +9,7 @@ entity regbank is
         INPUT_SELECT : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
         OUTPUT_ENABLE : IN STD_LOGIC;
         OUTPUT_SELECT : IN STD_LOGIC_VECTOR(3 DOWNTO 0)
-
+        ENABLE : IN STD_LOGIC;
         MODE : IN STD_LOGIC;
         SH : IN STD_LOGIC;
 
@@ -45,8 +45,8 @@ architecture Behavioral of regbank is
 
     begin
 
-        inpmux : DEMUX port map (I => '0', S => INPUT_SELECT, Y => INP_select);
-        outmux : DEMUX port map (I => '0', S => OUTPUT_SELECT, Y => OUT_select);
+        inpmux : DEMUX port map (I => ENABLE, S => INPUT_SELECT, Y => INP_select);
+        outmux : DEMUX port map (I => ENABLE, S => OUTPUT_SELECT, Y => OUT_select);
 
         gen: for i in 0 to 15 generate
             UUT: reg port map (CLK => CLK,
