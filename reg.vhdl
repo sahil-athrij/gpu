@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 entity reg is
     Port (
-           -- 16 input / output buffer with one enable
+           -- 16 input / output buffer
            CLK  : in  std_logic;
            IEN  : in  std_logic; -- input enable; shift (0) rotate (1)
            INP  : in  std_logic_vector (15 downto 0);
