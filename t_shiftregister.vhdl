@@ -7,16 +7,22 @@ end t_tri_state_buffer_top;
 architecture t_behaviour of t_tri_state_buffer_top is
     component reg is
         port(
-            CLK : in std_logic;
-            IEN : in std_logic;
-            OEN : in std_logic;
-            INP: in std_logic_vector(15 downto 0);
-            OUTP: out std_logic_vector(15 downto 0)
+            EN   : in  std_logic;
+            CLK  : in  std_logic;
+            IEN  : in  std_logic; -- input enable; shift (0) rotate (1)
+            INP  : in  std_logic_vector (15 downto 0);
+            OEN  : in  STD_LOGIC; -- output enable; right(0) left (1)
+            OUTP : out std_logic_vector (15 downto 0);
+            mode : IN STD_LOGIC; -- shift rotate mode (1) or read/write mode (0)
+            SH   : IN std_logic -- arithmetic (0) or logical (1)
 
         );
     end component reg;
 
     signal clk_t :  std_logic;
+    signal mode_t  :  std_logic;
+    signal en_t  :  std_logic;
+    signal sh_t  :  std_logic;
     signal ien_t  :  std_logic;
     signal oen_t  :  std_logic;
     signal D_t   :  std_logic_vector(15 downto 0);
@@ -28,6 +34,9 @@ architecture t_behaviour of t_tri_state_buffer_top is
             CLK => clk_t,
             IEN  => ien_t,
             OEN  => oen_t,
+            EN  => en_t,
+            SH  => sh_t,
+            mode  => mode_t,
             INP   => D_t,
             OUTP   => Q_t
         );
@@ -45,36 +54,23 @@ architecture t_behaviour of t_tri_state_buffer_top is
 
         en_process : process
         begin
-            ien_t <= '1';
-            wait for 20 ms;
+            en_t <= '0';
+            mode_t <= '0';
             ien_t <= '0';
-            wait for 20 ms;
-            if NOW > 500 ms then
-                wait;
-            end if;
-        end process;
-
-
-        op_process : process
-        begin
             oen_t <= '1';
-            wait for 40 ms;
+            D_t <= "0000000000000100";
+            wait for 20 ms;
+            ien_t <= '1';
+            D_t <= "ZZZZZZZZZZZZZZZZ";
+            wait for 20 ms;
             oen_t <= '0';
-            wait for 40 ms;
-            if NOW > 500 ms then
-                wait;
-            end if;
-        end process;
+            wait for 20 ms;
+            mode_t <= '1';
+            sh_t<='1';
+            wait for 80 ms;
+            mode_t <= '0';
 
-        test_process : process
-        begin
-            D_t <= "1111000011110000";
-            wait for 80 ms;
-            D_t <= "0000111100001111";
-            wait for 80 ms;
-            if NOW > 500 ms then
-                wait;
-            end if;
+            wait;
         end process;
 
 
