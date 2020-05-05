@@ -10,6 +10,7 @@ entity reg is
            INP  : in  std_logic_vector (15 downto 0);
            OEN  : in  STD_LOGIC; -- output enable; right(0) left (1)
            OUTP : out std_logic_vector (15 downto 0);
+
            mode : IN STD_LOGIC; -- shift rotate mode (1) or read/write mode (0)
            SH   : IN std_logic; -- arithmetic (0) or logical (1)
            );
@@ -48,7 +49,7 @@ begin
                     if (SH = '1') and (OEN = '1') then
                         temp <= shift_left (unsigned(temp), 1); -- logical left shift
                     end if;
-                end if;      
+                end if;
                 if (IEN = '1') then
                     if (OEN = '0') then
                         temp <= rotate_right (temp, 1);
@@ -56,7 +57,7 @@ begin
                     if (OEN = '1') then
                         temp <= rotate_left (temp, 1);
                     end if;
-                end if;            
+                end if;
             end if;        
                   
         end if;

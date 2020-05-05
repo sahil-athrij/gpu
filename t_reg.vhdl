@@ -7,16 +7,20 @@ end t_tri_state_buffer_top;
 architecture t_behaviour of t_tri_state_buffer_top is
     component reg is
         port(
-            CLK : in std_logic;
-            IEN : in std_logic;
-            OEN : in std_logic;
-            INP: in std_logic_vector(15 downto 0);
-            OUTP: out std_logic_vector(15 downto 0)
+           CLK  : in  std_logic;
+           IEN  : in  std_logic; -- input enable; shift (0) rotate (1)
+           INP  : in  std_logic_vector (15 downto 0);
+           OEN  : in  STD_LOGIC; -- output enable; right(0) left (1)
+           OUTP : out std_logic_vector (15 downto 0);
+           mode : IN STD_LOGIC; -- shift rotate mode (1) or read/write mode (0)
+           SH   : IN std_logic; -- arithmetic (0) or logical (1)
 
         );
     end component reg;
 
     signal clk_t :  std_logic;
+    signal mode  :  std_logic;
+    signal sh  :  std_logic;
     signal ien_t  :  std_logic;
     signal oen_t  :  std_logic;
     signal D_t   :  std_logic_vector(15 downto 0);
