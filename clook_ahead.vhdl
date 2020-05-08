@@ -8,7 +8,9 @@ ENTITY c_l_addr IS
          y_in      :  IN   STD_LOGIC_VECTOR(15 DOWNTO 0);
          carry_in  :  IN   STD_LOGIC;
          sum       :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
-         carry_out :  OUT  STD_LOGIC
+         carry_out :  OUT  STD_LOGIC;
+         aos       :  IN   STD_LOGIC;
+         en        :  IN   STD_LOGIC;   
         );
 END c_l_addr;
 
@@ -23,15 +25,27 @@ BEGIN
     h_sum <= x_in XOR y_in;
     carry_generate <= x_in AND y_in;
     carry_propagate <= x_in OR y_in;
-    PROCESS (carry_generate,carry_propagate,carry_in_internal)
+    not_yin         <= NOT y_in;
+    PROCESS (en, aos, carry_generate, carry_propagate, carry_in_internal)
     BEGIN
-    carry_in_internal(1) <= carry_generate(0) OR (carry_propagate(0) AND carry_in);
+    if (en = '1') then
+
+        if (aos = '1') then
+            carry_in <= '1';
+            h_sum <= x_in XOR not_yin;
+            carry_generate <= x_in AND not_yin;
+            carry_propagate <= x_in OR not_yin;
+        end if;
+        
+        carry_in_internal(1) <= carry_generate(0) OR (carry_propagate(0) AND carry_in);
         inst: FOR i IN 1 TO 14 LOOP
               carry_in_internal(i+1) <= carry_generate(i) OR (carry_propagate(i) AND carry_in_internal(i));
               END LOOP;
-    carry_out <= carry_generate(15) OR (carry_propagate(15) AND carry_in_internal(15));
+        carry_out <= carry_generate(15) OR (carry_propagate(15) AND carry_in_internal(15));
     END PROCESS;
 
     sum(0) <= h_sum(0) XOR carry_in;
     sum(15 DOWNTO 1) <= h_sum(15 DOWNTO 1) XOR carry_in_internal(15 DOWNTO 1);
+
+    end if;    
 END behavioral;
