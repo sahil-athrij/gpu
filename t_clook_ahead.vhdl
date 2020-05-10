@@ -43,12 +43,16 @@ architecture t_behaviour of t_c_l_addr is
             x_in_t <="1111000011110000";
             y_in_t <="0000111100001111";
             wait for 20 ms;
+            en_t<='1';
+            wait for 20 ms;
+            en_t<='0';
             x_in_t <="0000000011110000";
             y_in_t <="0000000011100000";
             wait for 20 ms;
             aos_t <='1';
             wait for 20 ms;
             en_t <='1';
+            wait for 20 ms;
             wait;
         end process;
 

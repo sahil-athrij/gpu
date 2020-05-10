@@ -35,13 +35,13 @@ BEGIN
 
         if (en = '0') then
             if (aos = '1') then
-                not_carry_in <= NOT carry_in;
+                not_carry_in <= carry_in;
                 h_sum <= x_in XOR not_yin;
                 carry_generate <= x_in AND not_yin;
                 carry_propagate <= x_in OR not_yin;
             end if;
 
-            carry_in_internal(1) <= carry_generate(0) OR (carry_propagate(0) AND carry_in);
+            carry_in_internal(1) <= carry_generate(0) OR (carry_propagate(0) AND not_carry_in);
             inst: FOR i IN 1 TO 14 LOOP
                   carry_in_internal(i+1) <= carry_generate(i) OR (carry_propagate(i) AND carry_in_internal(i));
                   END LOOP;
