@@ -45,7 +45,7 @@ BEGIN
             inst: FOR i IN 1 TO 14 LOOP
                   carry_in_internal(i+1) <= carry_generate(i) OR (carry_propagate(i) AND carry_in_internal(i));
                   END LOOP;
-            carry_out <= carry_generate(15) OR (carry_propagate(15) AND carry_in_internal(15));
+            carry_out <= aos xor (carry_generate(15) OR (carry_propagate(15) AND carry_in_internal(15)));
 
 
         sum(0) <= h_sum(0) XOR not_carry_in;
