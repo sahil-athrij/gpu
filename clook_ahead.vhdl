@@ -35,7 +35,7 @@ BEGIN
 
         if (en = '0') then
             if (aos = '1') then
-                not_carry_in <= carry_in;
+                not_carry_in <= not carry_in;
                 h_sum <= x_in XOR not_yin;
                 carry_generate <= x_in AND not_yin;
                 carry_propagate <= x_in OR not_yin;
