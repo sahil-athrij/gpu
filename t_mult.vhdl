@@ -46,6 +46,7 @@ architecture t_rtl of t_mult is
             s_t <= "1";
             wait for 20 ms;
 
+
             a_t <= "0000000011100000";
             b_t <= "0000000011110000";
             s_t <= "1";

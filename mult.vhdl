@@ -17,6 +17,7 @@ begin
 PROCESS ( a, b,s)
             begin
         if (s = '0') then
+
             c <= unsigned(a) * unsigned(b);
         elsif (s = '1') then
             c <= signed(a) * signed(b);
