@@ -13,17 +13,15 @@ entity mult is
 end mult;
 
 architecture rtl of mult is
-    signal tempu : unsigned(31 downto 0);
-    signal temps :   signed(31 downto 0);
+
 begin
 PROCESS ( a,b,s)
             begin
         if (s = '0') then
-            tempu <= unsigned(a) * unsigned(b);
-            c <= std_logic_vector(tempu);
+            c <= std_logic_vector(unsigned(a) * unsigned(b));
         elsif (s = '1') then
-            temps <= signed(a) * signed(b);
-            c <= std_logic_vector(temps);
+
+            c <= std_logic_vector(signed(a) * signed(b));
         else
             c <= (others => 'Z');
         end if;
