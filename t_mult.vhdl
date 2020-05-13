@@ -9,7 +9,7 @@ architecture t_rtl of t_mult is
         port (
             a,b : in  std_logic_vector(15 downto 0);
             c   : out std_logic_vector(31 downto 0);
-            s   : in std_logic;
+            s   : in std_logic
     
         );
         
