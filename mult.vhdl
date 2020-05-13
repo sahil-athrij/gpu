@@ -16,10 +16,9 @@ architecture rtl of mult is
     signal tempu : unsigned(31 downto 0);
     signal temps :   signed(31 downto 0);
 begin
-PROCESS ( a, b,s)
+PROCESS ( a,b,s)
             begin
         if (s = '0') then
-
             tempu <= unsigned(a) * unsigned(b);
             c <= std_logic_vector(tempu);
         elsif (s = '1') then
